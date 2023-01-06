@@ -1,8 +1,11 @@
 package jm.task.core.jdbc.model;
 
+import org.hibernate.hql.internal.ast.tree.IdentNode;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Table
 public class User {
@@ -58,6 +61,26 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(age, user.age);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (31 * id);
+        result *= name.hashCode();
+        result *= lastName.hashCode();
+        result *= age;
+        return result;
     }
 
     @Override
